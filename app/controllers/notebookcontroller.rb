@@ -4,13 +4,18 @@ class NotebookController < Server
   before do
     check_can_access
   end
-  
+
   get '/' do
     check_can_access
 
-  	@title = 'All NoteBooks'
-    @notebooks = get_all_notebooks
-  	erb :all_notebooks, :layout => :layout1
+    if @user.notebooks
+    	@title = 'All NoteBooks'
+      @notebooks = get_all_notebooks
+  	  erb :all_notebooks, layout: :layout1
+    else
+      @title = 'Create Your First Notebook'
+      erb :new_notebook_helper, layout: :layout1
+    end
   end
 
 
@@ -21,7 +26,7 @@ class NotebookController < Server
   get '/note' do
     search_for = params[:search]
     @title = "Search for #{search_for}"
-    @note_search_results = User.get(@user.id).notebook.all.notes.all(:content.like => "%#{search_for}%", :order => :created_at.desc)
+    @note_search_results = User.get(@user.id).notebooks.all.notes.all(:content.like => "%#{search_for}%", :order => :created_at.desc)
     erb :search_page, :layout => :layout1
     #redirect '/'
 
@@ -110,7 +115,7 @@ class NotebookController < Server
     notebookid = params[:notebook]
     noteid = params[:id]
     can_access_note(notebookid, noteid)
-    
+
     note = get_note(notebookid, noteid)
     note.destroy!
     redirect "/notebook/#{notebookid}"
@@ -126,36 +131,36 @@ class NotebookController < Server
 
   def can_access_notebook notebook_id
     user = @user.id
-    if !User.get(user).notebook.get(notebook_id)
+    if !User.get(user).notebooks.get(notebook_id)
       redirect '/notebook'
     end
   end
 
   def can_access_note(notebook_id, note_id)
     user = @user.id
-    if !User.get(user).notebook.get(notebook_id).notes.get(note_id)
+    if !User.get(user).notebooks.get(notebook_id).notes.get(note_id)
       redirect '/notebook'
     end
   end
 
   def get_all_notebooks
     user = @user.id
-    return User.get(user).notebook.all
+    return User.get(user).notebooks.all
   end
 
   def get_notebook notebook_id
     user = @user.id
-    return User.get(user).notebook.get(notebook_id)
+    return User.get(user).notebooks.get(notebook_id)
   end
 
   def get_all_notes notebook_id
     user = @user.id
-    return User.get(user).notebook.get(notebook_id).notes.all
+    return User.get(user).notebooks.get(notebook_id).notes.all
   end
 
   def get_note notebook_id, note_id
       user = @user.id
-      return User.get(user).notebook.get(notebook_id).notes.get(note_id)
+      return User.get(user).notebooks.get(notebook_id).notes.get(note_id)
   end
 
 
