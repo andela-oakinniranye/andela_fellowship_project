@@ -4,7 +4,6 @@ gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib', require: 'sinatra/reloader'
 gem 'datamapper'
 gem 'dm-types'
-gem 'dm-sqlite-adapter'
 gem 'slim'
 gem 'bcrypt'#, require: 'bcrypt'
 #gem 'sinatra-flash'#, require: 'sinatra/flash'
@@ -16,4 +15,10 @@ group :development, :test do
   gem 'minitest'
   gem 'capybara'
   gem 'rack-test'
+  gem 'dm-sqlite-adapter'
+end
+
+group :production do
+  gem 'pg'
+  gem 'dm-postgres-adapter'
 end

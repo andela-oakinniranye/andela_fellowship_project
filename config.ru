@@ -1,6 +1,6 @@
 require 'bundler'
 require 'sinatra/base'
-require 'sinatra/flash'
+#require 'sinatra/flash'
 
 require File.expand_path('../config/environment',  __FILE__)
 

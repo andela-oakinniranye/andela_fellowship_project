@@ -13,7 +13,7 @@ APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 #Dir[APP_ROOT.join]
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 # require the model(s)
 Dir[APP_ROOT.join('app', 'models', '*.rb')].each { |file| require file }
 
