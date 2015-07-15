@@ -1,5 +1,6 @@
 require 'dm-core'
 require 'dm-migrations'
+require 'dm-validations'
 
 
 class Notebook
@@ -14,7 +15,7 @@ class Notebook
 	has n, :notes, 'Note', :child_key => 'notebook_id' #:constraint => :destroy
 
 	#property :owner, Strin
-	#has 
+	#has
 
 	def get_id
 		return self[:id]
@@ -65,5 +66,3 @@ class Notebook
 		return self
 	end
 end
-
-
