@@ -11,7 +11,9 @@ APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 # require the controller(s)
 #Dir[APP_ROOT.join('app', 'controllers', 'Server.rb')].each { |file| require file }
 #Dir[APP_ROOT.join]
+Dir[APP_ROOT.join('app', 'controllers', '1server.rb')].each { |file| require file }
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
+
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 # require the model(s)
@@ -30,8 +32,6 @@ class Server < Sinatra::Base
   set :root, APP_ROOT.to_path
   set :views, File.join(Server.root, "app", "views")
   set :public_folder, File.join(Server.root, "app", "public")
-
-
 end
 
 #map('/'){run Server}
